@@ -39,7 +39,7 @@ class RunCalculatorASE(FiretaskBase):
     def run_task(self,fw_spec):
         # get the calculator
         exec(r'from {} import {} as calculator'.format(self['calculator_module'],
-                                                       self['calculator']))
+                                                       self['calculator']), globals())
         # set up the class
         parameter_dict = self['parameter_dict']
         atoms = dict_atoms(self['atoms'])
@@ -180,6 +180,7 @@ def get_ase_wflows(structures,
             fws.append(ASE_Optimize_FW(atoms_dict(struct),param,
                        calculator = calculator,
                        to_db = to_db,
+                       fmax = fmax,
                        db_file = db_file,
                        identifier = identifier,
                        calculator_module = calculator_module,))
@@ -188,11 +189,12 @@ def get_ase_wflows(structures,
         if fmax is not None:
             Warning('fmax was set, but an optimizer was not chosen, thus no optimization will be performed. To run an optimization, pass in the optimizer argument')
         for struct, param, identifier in zip(structures, parameters, identifiers):
-                       fws.append(ASE_Optimize_FW(atoms_dict(struct),param,
+                       fws.append(ASE_Run_FW(
+                       atoms = atoms_dict(struct),
+                       parameters = param,
                        calculator = calculator,
                        to_db = to_db,
                        db_file = db_file,
-                       optimizer = optimizer,
                        identifier = identifier,
                        calculator_module = calculator_module,))
 
@@ -217,7 +219,7 @@ class Optimize_Lattice_ASE_FW(FiretaskBase):
     def run_task(self,fw_spec):
         # get the calculator
         exec(r'from {} import {} as calculator'.format(self['calculator_module'],
-                                                       self['calculator']))
+                                                       self['calculator']), globals())
         def Eng(abc, calcargs):
             abc = np.array(abc)
             orig = dict_atoms(self['atoms'].copy())
@@ -380,7 +382,7 @@ class ASE_Optimize_FW(Firework):
                  to_db = False,
                  identifier = None,
                  optimizer = 'QuasiNewton',
-                 fmax = 0.02,
+                 fmax = 0.05,
                  calculator_module = 'ase.calculators',
                  **kwargs,
                  ):
