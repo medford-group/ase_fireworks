@@ -1,0 +1,8 @@
+{
+    "host": "chbe-am-terminus.chbe.gatech.edu",
+    "port": 27017,
+    "database": "testing",
+    "collection": "COLLECTION",
+    "user": "bcomer3",
+    "password": "123J45asfeqF31cxcaMsew"
+}

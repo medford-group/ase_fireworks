@@ -384,7 +384,7 @@ class ASE_Optimize_FW(Firework):
                  optimizer = 'QuasiNewton',
                  fmax = 0.05,
                  calculator_module = 'ase.calculators',
-                 **kwargs,
+                 **kwargs
                  ):
         """
         Runs an SCF calculation in SPARC on the given structure

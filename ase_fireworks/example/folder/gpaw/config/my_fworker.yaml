@@ -1,0 +1,7 @@
+name: PACE
+category: ''
+query: '{}'
+env:
+    db_file: /gpfs/pace1/project/chbe-medford/medford-share/users/bcomer3/atomate_TiO2/config/db.json
+    vasp_cmd: vasp-par
+    scratch_dir: null

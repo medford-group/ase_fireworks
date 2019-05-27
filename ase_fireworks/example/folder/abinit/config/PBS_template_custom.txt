@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#PBS -l nodes=$${nnodes}:ppn=$${ppnode}:core28
+#PBS -l pmem=$${pmem}
+#PBS -l walltime=$${walltime}
+#PBS -q $${queue}
+#PBS -N $${job_name}
+#PBS -o FW_job.out
+#PBS -e FW_job.error
+
+#ssh -f iw-dm-4.pace.gatech.edu -L 3333:localhost:3333 -N
+$${pre_rocket}
+cd $${launch_dir}
+$${rocket_launch}
+$${post_rocket}
+
+# CommonAdapter (PBS) completed writing Template

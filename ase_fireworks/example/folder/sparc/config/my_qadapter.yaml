@@ -1,0 +1,15 @@
+_fw_name: CommonAdapter
+_fw_q_type: PBS
+_fw_template_file: SOFTPATH/config/PBS_template_custom.txt
+rocket_launch: rlaunch -c SOFTPATH/config rapidfire
+nnodes: NODES
+ppnode: PROCS
+walltime: '48:00:00'
+queue: 'joeforce'
+pmem: '1GB'
+account: null
+job_name: 'FW'
+logdir: SOFTPATH/logs
+pre_rocket: 'ENV_SETUP'
+post_rocket: null
+launch_dir: $PBS_O_WORKDIR

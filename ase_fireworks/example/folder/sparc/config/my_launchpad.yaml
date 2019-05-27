@@ -1,0 +1,10 @@
+host: chbe-am-terminus.chbe.gatech.edu
+port: 27017
+name: NAME
+username: bcomer3
+password: 123J45asfeqF31cxcaMsew
+ssl_ca_file: null
+logdir: LOGPATH/logs
+strm_lvl: INFO
+user_indices: []
+wf_user_indices: []
