@@ -4,15 +4,24 @@ from shutil import move
 from os import remove, close
 
 
+############ edit this portion ###############
+
+# enter the names of the databases you will make
 dbs = ['dcdft']
+
+# enter the commands needed to set up environments for each piece
+# of software
 envs = {'sparc':'module load anaconda3/4.2.0;source activate atm',
         'espresso':'module load use.own;module load anaconda/2-4.2.0;source activate dev_esp',
         'abinit':'module load anaconda3/4.2.0;source activate atm',
 }
 
+# for each database enter nodes:cores of the PBS batch submissions
 n_p = {
     'dcdft':[1,8],
       }
+
+##############################################
 
 def replace(file_path, pattern, subst):
     #Create temp file

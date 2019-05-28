@@ -224,6 +224,16 @@ def get_hash(atoms):
 
 
 def atoms_dict(atoms):
+    """
+    Simple function to convert an ASE atoms object into a json 
+    serializable dictionary
+
+    arguments:
+        atoms(ASE atoms object): the atoms you'd like to convert
+
+    returns:
+        d(dict): a dictionary version of an atoms object
+    """
     d = OrderedDict(atoms=[{'symbol': atom.symbol,
                             'position': json.loads(encode(atom.position)),
                             'tag': atom.tag,
@@ -239,6 +249,16 @@ def atoms_dict(atoms):
     return d
 
 def dict_atoms(d):
+    """
+    A function to convert a dictionary representation of an atoms object
+    made by `atoms_dict` back into an atoms object
+
+    arguments:
+        d(dict): the dictionary version of an atoms object
+
+    returns:
+        atoms(ASE atoms object): an ASE atoms object
+    """
     atoms = Atoms([Atom(atom['symbol'],
                                 atom['position'],
                                 tag=atom['tag'],
