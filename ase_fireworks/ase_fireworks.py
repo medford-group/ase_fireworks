@@ -1,3 +1,6 @@
+__author__ = 'Ben Comer (Georgia Tech)'
+
+
 from .mongo import atoms_dict, dict_atoms, json
 import os
 from fireworks import explicit_serialize, FiretaskBase, FWAction, Firework, Workflow
@@ -7,6 +10,7 @@ from .mongo import mongo_atoms_doc, mongo_doc_atoms, MongoDatabase
 from pymatgen.io.ase import AseAtomsAdaptor
 from collections import OrderedDict
 from ase.io.jsonio import encode
+
 
 
 @explicit_serialize
@@ -118,7 +122,7 @@ def get_ase_wflows(structures,
                    optimizer = None,
                    fmax = None,
                    identifiers = None,
-                   calculator_module = 'ase.calculators',):
+                   calculator_module = 'ase.calculators.{}',):
     """
     A function to generate an arbitrary number of DFT calculations in a single workflow.
     This is designed to be very simple, no stringing workflows together, just throw in
@@ -160,13 +164,17 @@ def get_ase_wflows(structures,
     """
     fws = []
 
+    # initialize the default location of calculators if none is given
+    if calculator_module == 'ase.calculators.{}':
+        calculator_module = calculator_module.format(calculator.lower())
+
     # check inputs
     if type(structures) != list:
         structures = [structures]
     if type(parameters) != list:  # If no list of parameters is given, use the same for all
         parameters = [parameters] * len(structures) 
     if type(identifiers) != list:
-        identifiers = [identifiers]
+        identifiers = [identifiers] * len(structures)
     if len(parameters) != len(structures):
         raise Exception('The number of parameter dictionaries did not match the number of strucutures')
 
@@ -189,7 +197,7 @@ def get_ase_wflows(structures,
         if fmax is not None:
             Warning('fmax was set, but an optimizer was not chosen, thus no optimization will be performed. To run an optimization, pass in the optimizer argument')
         for struct, param, identifier in zip(structures, parameters, identifiers):
-                       fws.append(ASE_Run_FW(
+            fws.append(ASE_Run_FW(
                        atoms = atoms_dict(struct),
                        parameters = param,
                        calculator = calculator,
